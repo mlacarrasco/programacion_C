@@ -31,14 +31,34 @@ Las respuestas completas a los ejercicios propuestos se encuentran en [`respuest
 
 ## Cómo compilar y ejecutar los ejemplos
 
-Los ejemplos están escritos en C estándar y pueden compilarse con `gcc` (ver Anexo A):
+### Un solo archivo, con `gcc`
+
+Los ejemplos están escritos en C estándar y pueden compilarse individualmente con `gcc` (ver Anexo A):
 
 ```bash
 gcc codigo_cap_1_3.c -o programa
 ./programa
 ```
 
-Algunos códigos son fragmentos incompletos (esquemas generales, declaraciones o funciones sueltas) pensados para ilustrar un concepto puntual y no compilan de forma independiente; estos se identifican por su comentario inicial, que indica el número y la descripción del código dentro del libro.
+### Todo el repositorio, con `make`
+
+El repositorio incluye un [`Makefile`](Makefile) que compila, sin necesidad de invocar `gcc` manualmente, los **119 códigos que son programas completos y autocontenidos** (es decir, los que no dependen de otro fragmento del libro para compilar):
+
+```bash
+make                     # compila todos los programas autocontenidos en ./bin
+make chapter N=6         # compila sólo los del capítulo 6
+make chapter N=anexoB    # compila sólo los del Anexo B
+make run FILE=codigo_cap_6_16.c   # compila y ejecuta un código puntual
+make list                # lista los binarios ya compilados en ./bin
+make clean               # elimina ./bin
+make help                # resumen de los comandos disponibles
+```
+
+Cada archivo se compila como un programa independiente y su binario queda en `bin/` con el mismo nombre (sin la extensión `.c`), por ejemplo `bin/codigo_cap_6_16`. `make` usa `-std=c11 -Wall -Wextra` y enlaza con la biblioteca matemática (`-lm`), necesaria para los ejemplos del capítulo 5 que usan `math.h`. Con esta selección, `make` siempre termina sin errores de compilación.
+
+**Sobre los códigos que quedan fuera del `Makefile`:** el resto de los archivos del repositorio son deliberadamente incompletos —esquemas generales (`if`, `while`, `for`), declaraciones sueltas (una `struct`, un vector), o la segunda mitad de un ejemplo que se apoya en una función definida en el código anterior (p. ej. `codigo_cap_5_9.c` define `factorial` y `codigo_cap_5_10.c` lo invoca desde `main`)—. No se incluyen en el `Makefile` porque no compilan de forma independiente; para ejecutar uno de estos ejemplos, basta con concatenar manualmente el fragmento con el código del que depende (normalmente el inmediatamente anterior) y compilarlo con `gcc`, o con `make run FILE=<archivo_combinado>.c`.
+
+Los scripts `codigo_cap_anexoA_*.sh` del Anexo A ilustran comandos de terminal (compilación, ejecución, argumentos) y no están pensados para ejecutarse tal cual, sino como referencia de la sintaxis empleada.
 
 ## Licencia
 
