@@ -1,0 +1,12 @@
+.DS_Store
+.vscode/
+EOF
+bin/
+build/
+*.plist
+*.yml
+*.o
+*.out
+a.out
+.idea
+*.swp
