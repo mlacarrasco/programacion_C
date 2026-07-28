@@ -11,3 +11,8 @@ a.out
 .idea
 *.swp
 *.log
+*.svg
+*.tex
+*.txt
+*.pyc
+
